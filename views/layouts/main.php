@@ -15,67 +15,64 @@ AppAsset::register($this);
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
+
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+  <meta charset="<?= Yii::$app->charset ?>">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <?php $this->registerCsrfMetaTags() ?>
+  <title>FindFood | <?= Html::encode($this->title) ?></title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <?php $this->head() ?>
 </head>
+
 <body>
-<?php $this->beginBody() ?>
+  <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
-    NavBar::end();
-    ?>
-
+  <header class="header">
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+      <div class="header__inner">
+        <a href="#" class="home__link">Foods</a>
+        <a href="#" class="logo">
+          <img src="web/img/findfoodlogo.svg" alt="Find Food Logo" class="logo__img">
+          <div class="logo__text">FindFood</div>
+        </a>
+        <a href="#" class="admin__link">Admin</a>
+      </div>
     </div>
-</div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+  </header>
+  <main class="main">
+    <div class="search__bar">
+      <form action="">
+        <input class="search__bar-input" type="text" value="" data-role="tagsinput" />
+        <button type="submit"><img src="web/img/search.svg" alt="search"></button>
+      </form>
     </div>
-</footer>
+    <div class="food__results">
+      <div class="container">
+        <div class="foods__inner">
+          <div class="food__cart">
+            <img src="web/img/food1.png" alt="" class="food__img">
+            <div class="food__name">Pizza</div>
+            <div class="tags">
+              <a href="#" class="tag">floor</a>
+            </div>
+          </div>
+          <div class="food__cart">
+            <img src="web/img/food2.png" alt="" class="food__img">
+            <div class="food__name">Pizza</div>
+            <div class="tags">
+              <a href="#" class="tag">floor</a>
+              <a href="#" class="tag">floor</a> <a href="#" class="tag">floor</a> <a href="#" class="tag">floor</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
-<?php $this->endBody() ?>
+  <?php $this->endBody() ?>
 </body>
+
 </html>
 <?php $this->endPage() ?>
