@@ -44,8 +44,8 @@ AppAsset::register($this);
   <header class="header">
     <div class="container">
       <div class="header__inner">
-        <a href="<?= \yii\helpers\Url::to(['/admin/food']) ?>" class="home__link" style="color:brown">Create Food</a>
-        <a href="<?= \yii\helpers\Url::to(['/admin/ingredient']) ?>" class="home__link" style="color:brown">Create Ingredient</a>
+        <a href="<?= \yii\helpers\Url::to(['/admin/food']) ?>" class="home__link" style="color:brown">Your Foods</a>
+        <a href="<?= \yii\helpers\Url::to(['/admin/ingredient']) ?>" class="home__link" style="color:brown">Your Ingredients</a>
       </div>
     </div>
   </header>

@@ -23,9 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'title',
-            'active',
+            [
+                'attribute' => 'active',
+                'content' => function ($model) {
+                    return Html::tag('span', $model->active ? 'Active' : 'Non Active', [
+                        'class' => $model->active ? 'btn btn-success' : 'btn btn-danger'
+                    ]);
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
