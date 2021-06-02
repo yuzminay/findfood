@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'active',
                 'content' => function ($model) {
                     return Html::tag('span', $model->active ? 'Active' : 'Not Active', [
-                        'class' => $model->active ? 'badge badge-success' : 'badge badge-danger'
+                        'class' => $model->active ? 'btn btn-success' : 'btn btn-danger'
                     ]);
                 }
             ],

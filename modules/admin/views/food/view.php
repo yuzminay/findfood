@@ -31,8 +31,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
-            'img:ntext',
-            'active',
+            [
+                'attribute' => 'img',
+                'format' => ['html'],
+                'value' => function ($model) {
+                    return Html::img($model->getImageUrl(), ['style' => 'width: 150px']);
+                }
+            ],
+            [
+                'attribute' => 'active',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::tag('span', $model->active ? 'Active' : 'Not Active', [
+                        'class' => $model->active ? 'btn btn-success' : 'btn btn-danger'
+                    ]);
+                }
+            ],
         ],
     ]) ?>
 
