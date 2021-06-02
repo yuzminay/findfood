@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * FoodController implements the CRUD actions for Food model.
@@ -69,6 +70,7 @@ class FoodController extends Controller
 
         $modelIngs = Ingredient::find()->orderBy('id')->where(['active' => '1'])->all();
 
+        $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -94,6 +96,8 @@ class FoodController extends Controller
         $modelIngs = Ingredient::find()->orderBy('id')->where(['active' => '1'])->all();
 
         $model->ingrsArray = $model->getIngredients()->select('id')->all();
+
+        $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

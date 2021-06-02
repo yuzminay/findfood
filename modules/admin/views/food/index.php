@@ -22,11 +22,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'title',
-            'img:ntext',
-            'active',
+            [
+                'attribute' => 'img',
+                'format' => ['html'],
+                'value' => function ($model) {
+                    return Html::img($model->getImageUrl(), ['style' => 'width: 150px']);
+                }
+            ],
+            [
+                'attribute' => 'active',
+                'content' => function ($model) {
+                    return Html::tag('span', $model->active ? 'Active' : 'Not Active', [
+                        'class' => $model->active ? 'badge badge-success' : 'badge badge-danger'
+                    ]);
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

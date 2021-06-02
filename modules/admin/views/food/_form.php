@@ -8,9 +8,6 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 $foodsArray = \yii\helpers\ArrayHelper::map($modelIngs, 'id', 'title');
-
-// var_dump($foodsArray)
-
 ?>
 
 <div class="food-form">
@@ -20,6 +17,9 @@ $foodsArray = \yii\helpers\ArrayHelper::map($modelIngs, 'id', 'title');
     ]); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+
+    <?= Html::img($model->getImageUrl(), ['style' => 'width:150px']) ?>
 
     <div class="row justify-content-center pt-4">
         <div class="col-md-4">

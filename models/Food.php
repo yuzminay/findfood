@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\FileHelper;
 
 /**
  * This is the model class for table "food".
@@ -54,6 +55,29 @@ class Food extends \yii\db\ActiveRecord
         ];
     }
 
+    public function save($runValidation = true, $attributeNames = null)
+    {
+
+        if ($this->imageFile) {
+            $this->img = '/foods/' . Yii::$app->security->generateRandomString(16) . '_' . $this->imageFile->name;
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        $ok = parent::save($runValidation, $attributeNames);
+
+        if ($ok && $this->imageFile) {
+            $fullPath = Yii::getAlias('@app/web/storage' . $this->img);
+            $dir = dirname($fullPath);
+            if (!FileHelper::createDirectory($dir) || !$this->imageFile->saveAs($fullPath)) {
+                $transaction->rollBack();
+                return false;
+            }
+        }
+
+        $transaction->commit();
+        return $ok;
+    }
+
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
@@ -74,6 +98,14 @@ class Food extends \yii\db\ActiveRecord
             if ($item = Ingredient::find()->where(['id' => $itemId])->one())
                 $this->unlink('ingredients', $item, true);
         endforeach;
+    }
+
+    public function getImageUrl()
+    {
+        if (!$this->img) {
+            return Yii::$app->params['appUrl'] . '/web/img/no-image.jpg';
+        }
+        return Yii::$app->params['appUrl'] . '/web/storage' . $this->img;
     }
 
     /**
