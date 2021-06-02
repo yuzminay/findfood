@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use app\models\Food;
+use app\models\Ingredient;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -66,12 +67,16 @@ class FoodController extends Controller
     {
         $model = new Food();
 
+        $modelIngs = Ingredient::find()->orderBy('id')->where(['active' => '1'])->all();
+
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'modelIngs' => $modelIngs
         ]);
     }
 
@@ -86,12 +91,17 @@ class FoodController extends Controller
     {
         $model = $this->findModel($id);
 
+        $modelIngs = Ingredient::find()->orderBy('id')->where(['active' => '1'])->all();
+
+        $model->ingrsArray = $model->getIngredients()->select('id')->all();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'modelIngs' => $modelIngs
         ]);
     }
 

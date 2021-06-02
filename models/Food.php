@@ -16,6 +16,8 @@ use Yii;
  */
 class Food extends \yii\db\ActiveRecord
 {
+    public $imageFile;
+    public $ingrsArray = array(); #ingredients array
     /**
      * {@inheritdoc}
      */
@@ -31,6 +33,7 @@ class Food extends \yii\db\ActiveRecord
     {
         return [
             [['title'], 'required'],
+            [['ingrsArray'], 'safe'],
             [['img'], 'string'],
             [['active'], 'integer'],
             [['title'], 'string', 'max' => 255],
@@ -47,7 +50,30 @@ class Food extends \yii\db\ActiveRecord
             'title' => 'Title',
             'img' => 'Img',
             'active' => 'Active',
+            'ingrsArray' => 'Ingredients'
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        $this->foodIngsSelection();
+    }
+
+    public function foodIngsSelection()
+    {
+        $ingsId = $this->getIngredients()->select('id')->all();
+        $newIngsId = $this->ingrsArray ?: $ingsId;
+
+        foreach (array_filter(array_diff($newIngsId, $ingsId)) as $itemId) :
+            if ($item = Ingredient::find()->where(['id' => $itemId])->one()) {
+                $this->link('ingredients', $item);
+            }
+        endforeach;
+        foreach (array_filter(array_diff($ingsId, $newIngsId)) as $itemId) :
+            if ($item = Ingredient::find()->where(['id' => $itemId])->one())
+                $this->unlink('ingredients', $item, true);
+        endforeach;
     }
 
     /**
@@ -58,5 +84,11 @@ class Food extends \yii\db\ActiveRecord
     public function getFoodIngredients()
     {
         return $this->hasMany(FoodIngredient::className(), ['food_id' => 'id']);
+    }
+
+    public function getIngredients()
+    {
+        return $this->hasMany(Ingredient::className(), ['id' => 'ing_id'])
+            ->viaTable('food_ingredient', ['food_id' => 'id']);
     }
 }
