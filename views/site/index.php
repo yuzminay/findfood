@@ -1,3 +1,27 @@
+<?php
+
+use yii\widgets\ActiveForm;
+
+use kartik\select2\Select2;
+
+$data = ['bal', 'alma', 'duz'];
+?>
+<?php $form = ActiveForm::begin(); ?>
+
+<?php
+
+// Multiple select without model
+echo Select2::widget([
+    'name' => 'search',
+    'value' => '',
+    'data' => $data,
+    'options' => ['multiple' => true, 'placeholder' => 'Select states ...']
+]);
+
+?>
+
+<?php ActiveForm::end(); ?>
+
 <div class="search__bar">
     <form action="">
         <input class="search__bar-input" type="text" value="" data-role="tagsinput" />

@@ -15,6 +15,8 @@ use Yii;
  */
 class Ingredient extends \yii\db\ActiveRecord
 {
+
+    public $search;
     /**
      * {@inheritdoc}
      */
