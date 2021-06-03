@@ -86,9 +86,16 @@ class Food extends \yii\db\ActiveRecord
 
     public function foodIngsSelection()
     {
-        $ingsId = $this->getIngredients()->select('id')->all();
-        $newIngsId = $this->ingrsArray ?: $ingsId;
+        $ingsId = $this->getIngredients()->select('id')->asArray()->all();
 
+        if (!empty($ingsId)) {
+            $nid = [];
+            foreach ($ingsId as $key => $value) {
+                $nid[] = $value['id'];
+            }
+            $ingsId = $nid;
+        }
+        $newIngsId = $this->ingrsArray ?: $ingsId;
         foreach (array_filter(array_diff($newIngsId, $ingsId)) as $itemId) :
             if ($item = Ingredient::find()->where(['id' => $itemId])->one()) {
                 $this->link('ingredients', $item);
