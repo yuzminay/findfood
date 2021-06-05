@@ -110,9 +110,9 @@ class Food extends \yii\db\ActiveRecord
     public function getImageUrl()
     {
         if (!$this->img) {
-            return Yii::$app->params['appUrl'] . '/web/img/no-image.jpg';
+            return Yii::$app->params['appUrl'] . '/img/no-image.jpg';
         }
-        return Yii::$app->params['appUrl'] . '/web/storage' . $this->img;
+        return Yii::$app->params['appUrl'] . '/storage' . $this->img;
     }
 
     /**

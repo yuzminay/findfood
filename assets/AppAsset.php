@@ -21,9 +21,9 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'web/css/normalize.css',
+        'css/normalize.css',
         'https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap',
-        'web/css/style.css',
+        'css/style.css',
     ];
     public $js = [];
     public $depends = [

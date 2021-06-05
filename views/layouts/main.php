@@ -34,7 +34,7 @@ AppAsset::register($this);
       <div class="header__inner">
         <a href="/" class="home__link" style="color:blue">Foods</a>
         <a href="/" class="logo">
-          <img src="/web/img/findfoodlogo.svg" alt="Find Food Logo" class="logo__img">
+          <img src="/img/findfoodlogo.svg" alt="Find Food Logo" class="logo__img">
           <div class="logo__text">FindFood</div>
         </a>
         <a href="<?= yii\helpers\Url::to(['/admin']) ?>" class="admin__link">Admin</a>
